@@ -10,19 +10,22 @@
   "license": "MIT",
   "author": "Kam Low <auscaster@gmail.com> (http://sourcey.com/)",
   "scripts": {
-    "deploy": "node-lambda deploy"
+    "package": "shx rm -rf dist; tsc",
+    "deploy": "npm run package; node-lambda deploy"
   },
   "dependencies": {
-    "async": "^1.5.0",
-    "dotenv": "^1.2.0",
-    "imagemin": "^3.2.0",
-    "imagemin-gifsicle": "^4.0.0",
-    "imagemin-jpegtran": "^4.0.0",
-    "imagemin-optipng": "^4.3.0",
-    "imagemin-svgo": "^4.0.0",
-    "underscore": "^1.8.3"
+    "dotenv": "^4.0.0",
+    "imagemin": "^5.3.1",
+    "imagemin-gifsicle": "^5.2.0",
+    "imagemin-jpegtran": "^5.0.2",
+    "imagemin-optipng": "^5.2.1",
+    "imagemin-pngquant": "^5.0.1",
+    "imagemin-svgo": "^6.0.0"
   },
   "devDependencies": {
-    "node-lambda": "^0.7.1"
+    "@types/aws-lambda": "0.0.22",
+    "node-lambda": "^0.11.4",
+    "shx": "^0.2.2",
+    "typescript": "^2.3.2"
   }
 }

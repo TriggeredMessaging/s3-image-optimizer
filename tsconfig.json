@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target":                       "es6",
+    "module":                       "commonjs",
+    "emitDecoratorMetadata":        false,
+    "experimentalDecorators":       true,
+    "sourceMap":                    false,
+    "moduleResolution":             "node",
+    "allowSyntheticDefaultImports": true,
+    "outDir":                       "dist",
+    "lib":                          [
+
+      "esnext"
+    ]
+  },
+  "exclude":         [
+    "node_modules",
+    "dist",
+    "test",
+    "functions"
+  ]
+}

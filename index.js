@@ -1,1 +1,1 @@
-module.exports = require('./optimizer');
+module.exports = require('./dist/lambdaEntryPoint');
