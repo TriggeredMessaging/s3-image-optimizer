@@ -2,3 +2,5 @@ node_modules
 *.log
 .marker
 dist/
+.env
+event_sources.json
