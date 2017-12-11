@@ -24,8 +24,6 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "0.0.22",
-    "config": "^1.28.1",
-    "js-yaml": "^3.10.0",
     "node-lambda": "git+https://github.com/motdotla/node-lambda.git",
     "shx": "^0.2.2",
     "typescript": "^2.3.2"

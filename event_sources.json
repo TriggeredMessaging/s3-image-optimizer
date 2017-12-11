@@ -1,0 +1,8 @@
+{
+  "S3Events": [{
+    "Bucket": "source-bucket",
+    "Events": [
+      "s3:ObjectCreated:*"
+    ]
+  }]
+}

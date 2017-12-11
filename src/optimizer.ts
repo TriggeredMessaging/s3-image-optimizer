@@ -1,4 +1,5 @@
 import * as aws from 'aws-sdk';
+import * as path from 'path';
 import * as imagemin from 'imagemin';
 import * as imageminJpegTran from 'imagemin-jpegtran';
 import * as imageminPngQuant from 'imagemin-pngquant';
@@ -17,6 +18,7 @@ const PREFIX         = process.env.PREFIX;
 const UPLOAD_BUCKET  = process.env.UPLOAD_BUCKET;
 const UPLOAD_ACL     = process.env.UPLOAD_ACL || 'public-read';
 const SKIP_FILE_SIZE = +process.env.MAX_FILE_SIZE || -1;
+const SKIP_PREFIX    = process.env.EXCLUDE_PREFIX || null;
 
 const imageminOptions = {
   optimizationLevel: (+process.env.PNG_OPTIM_LEVEL || 7),
@@ -62,6 +64,10 @@ function isImageFile(key: string): boolean {
 
 export async function processOne(key: string, bucket: string = SOURCE_BUCKET) {
   console.log(`Processing ${key}`);
+  if ( path.basename(key).startsWith(SKIP_PREFIX) ) {
+    console.log(`Skipping ${key} cause of prefix`);
+    return;
+  }
   const data = await s3.headObject({Bucket: bucket, Key: key}).promise();
   if (data.Metadata && data.Metadata.optimized) {
     console.log(`${key} already optimized. Skipping`);

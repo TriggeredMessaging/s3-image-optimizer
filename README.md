@@ -43,13 +43,10 @@ In `.env`:
  * `AWS_FUNCTION_NAME` and `AWS_ENVIRONMENT` control naming of the lambda function created
  * `AWS_MEMORY_SIZE` is the amount of memory given to your Lambda. It's also related to how much CPU share it gets. Since optimizing images is fairly intensive, probably best to keep this high
  * `AWS_TIMEOUT` runtime timeout for the lambda in seconds up to 5 minutes. Again, image optimization is fairly intensive so you'll probably want to leave this at the maximum of 300.
+ * `EXCLUDE_PREFIX` avoid optimizing images that have such prefix in its filename.
+In `event_sources.json`:
 
-In `runtime.env`:
-
- * `UPLOAD_ACL`: finalised images will be uploaded with this permission level. Should be one of `private` `public-read` `public-read-write` `aws-exec-read` `authenticated-read` `bucket-owner-read` `bucket-owner-full-control`. Default is `public-read`.
- * `MAX_FILE_SIZE`: files over this size in bytes will be skipped (e.g. big PNGs will probably just hit the timeout anyway). Set to `-1` for no limit
- * `PNG_OPTIM_LEVEL`: Optimization level to use for PNGs, between 0 and 7. Lower level means faster optimization, higher means better results.
-
+ * `Bucket`: configure the bucket where to listen. 
 
 [l]: https://aws.amazon.com/lambda/
 [imagemin]: https://github.com/imagemin/imagemin
