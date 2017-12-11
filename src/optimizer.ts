@@ -12,7 +12,9 @@ import * as os from 'os';
 const s3 = new aws.S3();
 
 (<any>Symbol).asyncIterator = Symbol.asyncIterator || Symbol.for("Symbol.asyncIterator");
-
+if (!process.env.SOURCE_BUCKET) {
+  require('dotenv').load();
+}
 const SOURCE_BUCKET  = process.env.SOURCE_BUCKET;
 const PREFIX         = process.env.PREFIX;
 const UPLOAD_BUCKET  = process.env.UPLOAD_BUCKET;
@@ -63,6 +65,7 @@ function isImageFile(key: string): boolean {
 }
 
 export async function processOne(key: string, bucket: string = SOURCE_BUCKET) {
+  key = decodeURIComponent(key.replace(/\+/g, '%20'));
   console.log(`Processing ${key}`);
   if ( path.basename(key).startsWith(SKIP_PREFIX) ) {
     console.log(`Skipping ${key} cause of prefix`);
