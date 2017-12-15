@@ -32,7 +32,7 @@ Optim is a super-simple [Lambda][l] function that can listen to an S3 bucket for
 
 ## Configuration
 
-There are two sets of configuration here. The `.env` file contains configuration related to setup and deployment, and `runtime.env` is for configuration of how Optim behaves.
+There are two sets of configuration here. The `.env` file contains configuration related to setup and deployment.
 
 In `.env`:
 
@@ -44,9 +44,27 @@ In `.env`:
  * `AWS_MEMORY_SIZE` is the amount of memory given to your Lambda. It's also related to how much CPU share it gets. Since optimizing images is fairly intensive, probably best to keep this high
  * `AWS_TIMEOUT` runtime timeout for the lambda in seconds up to 5 minutes. Again, image optimization is fairly intensive so you'll probably want to leave this at the maximum of 300.
  * `EXCLUDE_PREFIX` avoid optimizing images that have such prefix in its filename.
+
 In `event_sources.json`:
 
  * `Bucket`: configure the bucket where to listen. 
+ 
+ 
+## Lambda deployment
+
+After configuring, deploy lamda with `npm run deploy`
+
+## Current Bucket Optimization
+
+This project can optimize all the existing images in the bucket.
+You need to: `npm run package` and `node dist/optimizeAll.js`
+
+It will optimize images using all the CPUs on your pc. 
+
+## Stats
+
+I've used this repo to successfully optimize a bucket with 490k images (90% jpg, 9%png, 1% others) In less than 2hours with a 16core EC2 instance.
+
 
 [l]: https://aws.amazon.com/lambda/
 [imagemin]: https://github.com/imagemin/imagemin
