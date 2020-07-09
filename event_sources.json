@@ -1,6 +1,6 @@
 {
   "S3Events": [{
-    "Bucket": "source-bucket",
+    "Bucket": "frel-marketing-uploads",
     "Events": [
       "s3:ObjectCreated:*"
     ]

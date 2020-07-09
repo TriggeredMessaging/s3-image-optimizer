@@ -11,7 +11,7 @@ import * as os from 'os';
 
 const s3 = new aws.S3();
 
-(<any>Symbol).asyncIterator = Symbol.asyncIterator || Symbol.for("Symbol.asyncIterator");
+// (<any>Symbol).asyncIterator = Symbol.asyncIterator || Symbol.for("Symbol.asyncIterator");
 if (!process.env.SOURCE_BUCKET) {
   require('dotenv').load();
 }
@@ -21,6 +21,7 @@ const UPLOAD_BUCKET  = process.env.UPLOAD_BUCKET;
 const UPLOAD_ACL     = process.env.UPLOAD_ACL || 'public-read';
 const SKIP_FILE_SIZE = +process.env.MAX_FILE_SIZE || -1;
 const SKIP_PREFIX    = process.env.EXCLUDE_PREFIX || null;
+const MAX_AGE        = process.env.MAX_AGE || 600;
 
 const imageminOptions = {
   optimizationLevel: (+process.env.PNG_OPTIM_LEVEL || 7),
@@ -47,7 +48,7 @@ async function optimizeImage(buf: Buffer): Promise<Buffer> {
       ]
     });
   }
-  //console.log('Reduction: ', optimizedData.length - buf.length);
+  console.log('Reduction: ', Math.round(((buf.length - optimizedData.length) / buf.length)*100)  + "%");
   return optimizedData;
 }
 
@@ -110,6 +111,7 @@ export async function processOne(key: string, bucket: string = SOURCE_BUCKET) {
     Key        : key,
     Body       : optimizedData,
     ContentType: imageData.ContentType,
+    CacheControl: "max-age=" + MAX_AGE,
     Metadata   : data.Metadata
   }).promise();
 
@@ -145,6 +147,10 @@ function loadLastMarker() {
 }
 
 export async function processAll() {
+
+
+
+
   const keysIterator = getKeys({
     Bucket : SOURCE_BUCKET,
     Marker : loadLastMarker(),
